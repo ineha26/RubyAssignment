@@ -31,25 +31,20 @@ def weatherByYear(year)
     puts filename
     table = CSV.parse(File.read(filename), headers: true)
     max = 0
-    strMax=0
-    strMin=0
     min = 0
     i = 0
     while i < table.length
       if table[i]["Max TemperatureC"] != nil
         strMax = Integer(table[i]["Max TemperatureC"])
+        if strMax != nil && strMax > Integer(table[max]["Max TemperatureC"])
+          max = i
+        end
       end
-      # puts "At #{i} strMax is : #{strMax}"
       if table[i]["Min TemperatureC"] != nil
         strMin = Integer(table[i]["Min TemperatureC"])
-      end
-
-      if strMax != nil && strMax > Integer(table[max]["Max TemperatureC"])
-        max = i
-      end
-
-      if strMin != nil && strMin < Integer(table[min]["Min TemperatureC"])
-        min = i
+        if strMin != nil && strMin < Integer(table[min]["Min TemperatureC"])
+          min = i
+        end
       end
       i = i + 1
     end
